@@ -14,9 +14,10 @@ interface Project {
 interface ProjectCardProps {
   project: Project;
   language: 'ko' | 'en';
+  onViewDetails: (project: Project) => void;
 }
 
-export default function ProjectCard({ project, language }: ProjectCardProps) {
+export default function ProjectCard({ project, language, onViewDetails }: ProjectCardProps) {
   const t = (ko: string, en: string) => language === 'ko' ? ko : en;
   const title = language === 'ko' ? project.titleKo : project.titleEn;
   const desc = language === 'ko' ? project.descKo : project.descEn;
@@ -30,7 +31,13 @@ export default function ProjectCard({ project, language }: ProjectCardProps) {
         <h3>{title}</h3>
         <p>{desc}</p>
         <div className="program-links">
-          <a href="#" className="program-link view-details">{t('자세히 보기', 'View Details')}</a>
+          <button 
+            onClick={() => onViewDetails(project)}
+            className="program-link view-details"
+            style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            {t('자세히 보기', 'View Details')}
+          </button>
           <a href={project.downloadUrl} target="_blank" className="program-link download-btn">
             <span className="icon">⬇️</span> {t('다운로드', 'Download')}
           </a>

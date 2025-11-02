@@ -4,6 +4,18 @@ import { useState, useEffect } from 'react';
 import Header from './Header';
 import ProjectCard from './ProjectCard';
 import CookieBanner from './CookieBanner';
+import ProjectDetailPage from './ProjectDetailPage';
+
+interface Project {
+  id: string;
+  icon: string;
+  titleKo: string;
+  titleEn: string;
+  descKo: string;
+  descEn: string;
+  downloadUrl: string;
+  disabled: boolean;
+}
 
 interface MainPageProps {
   language: 'ko' | 'en';
@@ -12,13 +24,41 @@ interface MainPageProps {
 }
 
 const projects = [
-  { id: 'project1', icon: '🖥️', titleKo: 'JISMemo', titleEn: 'JISMemo', descKo: 'Windows용 간편한 메모지 프로그램입니다.', descEn: 'Simple memo program for Windows.', downloadUrl: 'https://drive.google.com/file/d/1Eck7dZQaGkAf86rEA6UiZpp5YU_N0F_6/view?usp=sharing', disabled: false },
-  { id: 'project2', icon: '🌐', titleKo: '웹 기반 도구', titleEn: 'Web-based Tool', descKo: '브라우저에서 사용할 수 있는 웹 기반 도구입니다.', descEn: 'Web-based tool available in browsers.', downloadUrl: '#', disabled: true },
-  { id: 'project3', icon: '📱', titleKo: '모바일 앱', titleEn: 'Mobile App', descKo: 'Android 및 iOS용 모바일 애플리케이션입니다.', descEn: 'Mobile application for Android and iOS.', downloadUrl: '#', disabled: true }
+  { 
+    id: 'project1', 
+    icon: '🖥️', 
+    titleKo: 'JISMemo', 
+    titleEn: 'JISMemo', 
+    descKo: 'Windows용 간편한 메모지 프로그램입니다.', 
+    descEn: 'Simple memo program for Windows.', 
+    downloadUrl: 'https://drive.google.com/file/d/1Eck7dZQaGkAf86rEA6UiZpp5YU_N0F_6/view?usp=sharing', 
+    disabled: false 
+  },
+  { 
+    id: 'project2', 
+    icon: '🌐', 
+    titleKo: '웹 기반 도구', 
+    titleEn: 'Web-based Tool', 
+    descKo: '브라우저에서 사용할 수 있는 웹 기반 도구입니다.', 
+    descEn: 'Web-based tool available in browsers.', 
+    downloadUrl: '#', 
+    disabled: true 
+  },
+  { 
+    id: 'project3', 
+    icon: '📱', 
+    titleKo: '모바일 앱', 
+    titleEn: 'Mobile App', 
+    descKo: 'Android 및 iOS용 모바일 애플리케이션입니다.', 
+    descEn: 'Mobile application for Android and iOS.', 
+    downloadUrl: '#', 
+    disabled: true 
+  }
 ];
 
 export default function MainPage({ language, setLanguage, onLogoClick }: MainPageProps) {
   const [showCookie, setShowCookie] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     const accepted = localStorage.getItem('cookiesAccepted');
@@ -27,19 +67,42 @@ export default function MainPage({ language, setLanguage, onLogoClick }: MainPag
 
   const t = (ko: string, en: string) => language === 'ko' ? ko : en;
 
+  const handleViewDetails = (project: Project) => {
+    setSelectedProject(project);
+  };
+
+  const handleBackToMain = () => {
+    setSelectedProject(null);
+  };
+
+  if (selectedProject) {
+    return (
+      <ProjectDetailPage
+        project={selectedProject}
+        language={language}
+        setLanguage={setLanguage}
+        onBack={handleBackToMain}
+        onLogoClick={() => {
+          setSelectedProject(null);
+          onLogoClick();
+        }}
+      />
+    );
+  }
+
   return (
     <div id="main-page">
       <Header language={language} setLanguage={setLanguage} onLogoClick={onLogoClick} />
       <main>
         <section className="welcome-section">
-          <h1 className="welcome-title">{t('Jisrubyy의 프로젝트', "Jisrubyy's Projects")}</h1>
+          <h1 className="welcome-title">{t('Jisrubyy의 프로젝트', 'Jisrubyy\'s Projects')}</h1>
           <p className="welcome-text">{t('다양한 프로젝트와 개발 과정을 기록하고 공유합니다.', 'Recording and sharing various projects and development processes.')}</p>
         </section>
 
         <section id="projects" className="programs-section">
           <h2 className="section-title">{t('프로젝트 목록', 'Project List')}</h2>
           <div className="programs-grid">
-            {projects.map(p => <ProjectCard key={p.id} project={p} language={language} />)}
+            {projects.map(p => <ProjectCard key={p.id} project={p} language={language} onViewDetails={handleViewDetails} />)}
           </div>
         </section>
 
@@ -83,10 +146,147 @@ export default function MainPage({ language, setLanguage, onLogoClick }: MainPag
         </section>
 
         <section id="policy" className="dev-log">
-          <h3>{t('정책', 'Policy')}</h3>
-          <div style={{ background: 'linear-gradient(135deg, var(--medium-gray) 0%, rgba(52, 73, 94, 0.6) 100%)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(26, 188, 156, 0.3)', lineHeight: 1.8, color: 'var(--white)' }}>
-            <h4 style={{ color: 'var(--light-green)', marginTop: 0 }}>{t('개인정보처리방침', 'Privacy Policy')}</h4>
-            <p>{t('이 개인정보처리방침은 JISRUBYY가 제공하는 모든 플랫폼(기기) 앱 및 웹(이하 "응용프로그램(또는 본 웹)")에 적용됩니다(이하 "서비스 제공자"). 본 서비스는 "있는 그대로(AS IS)" 제공됩니다.', 'This privacy policy applies to the all JISRUBYY app and web (hereby referred to as "Application(or this web)") for all devices(mobile and all platform, pc , etc) that was created by JISRUBYY (hereby referred to as "Service Provider") all services. This service is intended for use "AS IS".')}</p>
+          <h3 data-ko="정책" data-en="Policy">{t('정책', 'Policy')}</h3>
+
+          {/* Korean Policy */}
+          <div className="policy-container" data-lang="ko" style={{ display: language === 'ko' ? 'block' : 'none', background: 'linear-gradient(135deg, var(--medium-gray) 0%, rgba(52, 73, 94, 0.6) 100%)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(26, 188, 156, 0.3)', lineHeight: 1.8, color: 'var(--white)' }}>
+            <h4 style={{ color: 'var(--light-green)', marginTop: 0 }}>개인정보처리방침</h4>
+            <p>이 개인정보처리방침은 JISRUBYY가 제공하는 모든 플랫폼(기기)  앱 및 웹(이하 &quot;응용프로그램(또는 본 웹)&quot;)에 적용됩니다(이하 &quot;서비스 제공자&quot;). 본 서비스는 &quot;있는 그대로(AS IS)&quot; 제공됩니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>정보의 수집 및 이용</h5>
+            <p>응용프로그램(또는 본 웹)은 다운로드 및 사용 시 정보를 수집할 수 있습니다. 이 정보에는 다음과 같은 내용이 포함될 수 있습니다.</p>
+            <ul style={{ paddingLeft: '1.2rem' }}>
+              <li>사용자 기기의 인터넷 프로토콜 주소(IP 주소)</li>
+              <li>응용프로그램(또는 본 웹) 내에서 방문한 페이지, 방문 일시, 각 페이지에서 보낸 시간</li>
+              <li>응용프로그램(또는 본 웹)에서 보낸 총 사용 시간</li>
+              <li>모바일 기기에서 사용하는 운영체제 정보</li>
+            </ul>
+            <p>응용프로그램(또는 본 웹)은 사용자의 정확한 위치 정보를 수집하지 않습니다.</p>
+            <p>서비스 제공자는 제공된 정보를 이용하여 중요한 안내, 필수 고지, 마케팅 프로모션 등의 정보를 때때로 제공하기 위해 사용자를 연락할 수 있습니다.</p>
+            <p>더 나은 서비스 제공을 위해, 응용프로그램(또는 본 웹)을 사용하는 동안 서비스 제공자는 개인을 식별할 수 있는 특정 정보를 요구할 수 있습니다(예: <a href="mailto:jisrubyy@gmail.com">jisrubyy@gmail.com</a>). 제공된 정보는 본 개인정보처리방침에 따라 보관 및 이용됩니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>제3자 접근</h5>
+            <p>서비스 제공자는 응용프로그램(또는 본 웹) 및 서비스 개선을 위해 집계되고 익명화된 데이터를 주기적으로 외부 서비스로 전송할 수 있습니다. 또한 본 개인정보처리방침에서 설명한 방식으로 제3자와 정보를 공유할 수 있습니다.</p>
+            <p>서비스 제공자는 다음의 경우 사용자 제공 정보 및 자동 수집 정보를 공개할 수 있습니다.</p>
+            <ul style={{ paddingLeft: '1.2rem' }}>
+              <li>소환장 등 법적 절차를 준수하기 위해 법에서 요구되는 경우</li>
+              <li>권리 보호, 사용자 및 타인의 안전 보호, 사기 조사, 정부 요청에 대응하기 위해 선의로 공개가 필요하다고 믿는 경우</li>
+              <li>서비스 제공자를 대신하여 작업하며, 당사가 공개한 정보를 독립적으로 사용하지 않고, 본 개인정보처리방침의 규칙을 준수하기로 동의한 신뢰할 수 있는 서비스 제공업체와의 경우</li>
+            </ul>
+
+            <h5 style={{ color: 'var(--light-green)' }}>수집 거부 권리(옵트아웃)</h5>
+            <p>사용자는 응용프로그램(또는 본 웹)의 설치를 제거(삭제)하여 정보 수집을 중단할 수 있습니다. 이는 모바일 기기의 표준 제거 절차 또는 해당 마켓/네트워크에서 제공하는 절차를 통해 가능합니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>데이터 보관 정책</h5>
+            <p>서비스 제공자는 사용자가 응용프로그램(또는 본 웹)을 사용하는 기간 동안 및 그 후 합리적인 기간 동안 사용자 제공 데이터를 보관합니다. 응용프로그램(또는 본 웹)을 통해 제공한 사용자 제공 데이터의 삭제를 원하시는 경우 <a href="mailto:jisrubyy@gmail.com">jisrubyy@gmail.com</a> 으로 연락 주시면 합리적인 기간 내에 조치하겠습니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>아동</h5>
+            <p>서비스 제공자는 만 13세 미만의 아동으로부터 고의적으로 데이터를 수집하거나 마케팅을 수행하지 않습니다.</p>
+            <p>서비스 제공자는 아동의 개인을 식별할 수 있는 정보를 고의로 수집하지 않습니다. 아동이 응용프로그램(또는 본 웹) 및/또는 서비스를 통해 개인 정보를 제출하지 않도록 권장하며, 부모 및 법정 대리인에게 자녀의 인터넷 사용을 모니터링하고 본 정책을 준수하도록 지도해 주시길 권장합니다. 만약 아동이 응용프로그램(또는 본 웹) 및/또는 서비스를 통해 개인 정보를 제공했다고 판단되는 경우, <a href="mailto:jisrubyy@gmail.com">jisrubyy@gmail.com</a> 으로 연락해 주시면 필요한 조치를 취하겠습니다. 또한 거주 국가에서 개인 정보 처리에 동의하려면 최소 16세 이상이어야 합니다(일부 국가에서는 부모 또는 보호자가 대신 동의할 수 있습니다).</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>보안</h5>
+            <p>서비스 제공자는 사용자의 정보 기밀 유지를 위해 최선을 다합니다. 처리 및 보관되는 정보를 보호하기 위해 물리적, 전자적, 절차적 보호 조치를 제공합니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>변경</h5>
+            <p>본 개인정보처리방침은 필요에 따라 수시로 업데이트될 수 있습니다. 변경 사항은 본 페이지를 업데이트하는 방식으로 고지됩니다. 정기적으로 본 개인정보처리방침을 확인하시기 바라며, 계속 사용하는 경우 모든 변경 사항에 동의한 것으로 간주됩니다.</p>
+            <p>본 개인정보처리방침의 시행일은 2025-10-29 입니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>동의</h5>
+            <p>응용프로그램(또는 본 웹)을 사용함으로써, 본 개인정보처리방침에 따라 정보가 처리되는 것에 동의하는 것으로 간주됩니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>문의하기</h5>
+            <p>응용프로그램(또는 본 웹) 사용 중 개인정보와 관련된 문의가 있으시면 <a href="mailto:jisrubyy@gmail.com">jisrubyy@gmail.com</a> 으로 연락해 주시기 바랍니다.</p>
+
+            <hr style={{ borderColor: 'rgba(26, 188, 156, 0.3)', margin: '2rem 0' }} />
+
+            <h4 style={{ color: 'var(--light-green)' }}>이용약관</h4>
+            <p>본 이용약관은 JISRUBYY가 제공하는 모든 플랫폼(기기) 앱 및 웹(이하 &quot;응용프로그램(또는 본 웹)&quot;)에 적용됩니다(이하 &quot;서비스 제공자&quot;).</p>
+            <p>응용프로그램(또는 본 웹)을 다운로드하거나 이용함과 동시에 다음 약관에 동의하는 것으로 간주됩니다. 약관을 사용 전에 충분히 읽고 이해하시길 권장드립니다. 응용프로그램(또는 본 웹) 또는 그 일부, 당사의 상표에 대한 무단 복제, 수정은 엄격히 금지됩니다. 또한 응용프로그램(또는 본 웹)의 소스 코드를 추출하거나, 다른 언어로 번역하거나, 파생 버전을 제작하려는 시도는 허용되지 않습니다. 응용프로그램(또는 본 웹)과 관련된 모든 상표, 저작권, 데이터베이스 권리 및 기타 지식재산권은 서비스 제공자에게 귀속됩니다.</p>
+            <p>서비스 제공자는 응용프로그램(또는 본 웹)이 유용하고 효율적으로 사용될 수 있도록 최선을 다합니다. 이와 관련하여 서비스 제공자는 언제든지 그 이유와 관계없이 응용프로그램(또는 본 웹)을 수정하거나 서비스에 비용을 청구할 권리를 보유합니다. 응용프로그램(또는 본 웹) 또는 서비스에 비용이 부과되는 경우, 그 사실을 명확하게 고지하겠습니다.</p>
+            <p>응용프로그램(또는 본 웹)은 서비스를 제공하기 위해 사용자가 제공한 개인 데이터를 저장 및 처리합니다. 사용자는 자신의 기기와 응용프로그램(또는 본 웹)에 대한 접근 권한을 안전하게 관리할 책임이 있습니다. 또한 공식 운영체제의 제한을 해제하는 루팅/탈옥 행위는 악성코드, 바이러스 등에 노출될 수 있으며, 기기의 보안 기능을 저해하고, 응용프로그램(또는 본 웹)이 정상적으로 동작하지 않거나 전혀 동작하지 않을 수 있으므로 강력히 권장하지 않습니다.</p>
+            <p>또한 일부 기능은 활성화된 인터넷 연결이 필요합니다(와이파이 또는 이동통신사 제공). 와이파이 이용 불가 또는 데이터 소진 등으로 인해 응용프로그램(또는 본 웹)이 완전한 기능을 수행하지 못하는 경우, 서비스 제공자는 그 책임을 지지 않습니다.</p>
+            <p>와이파이 영역 외에서 응용프로그램(또는 본 웹)을 사용하는 경우, 이동통신사의 계약 약관이 적용될 수 있습니다. 이에 따라 응용프로그램(또는 본 웹) 접속 중 발생하는 데이터 사용료 또는 제3자 비용이 청구될 수 있으며, 사용자는 이러한 비용(로밍 데이터 요금 포함)에 대한 책임을 부담합니다. 해당 기기의 요금 납부자가 아닌 경우, 사용자는 요금 납부자의 허락을 받은 것으로 간주됩니다.</p>
+            <p>마찬가지로, 응용프로그램(또는 본 웹)의 사용과 관련하여 사용자의 기기가 충전 상태를 유지하도록 관리하는 책임은 사용자에게 있습니다. 기기의 배터리 방전으로 인해 서비스를 이용하지 못하는 상황에 대해서 서비스 제공자는 책임을 지지 않습니다.</p>
+            <p>서비스 제공자는 응용프로그램(또는 본 웹)이 항상 최신 상태이며 정확하도록 노력하지만, 제3자로부터 제공받는 정보에 의존하는 경우가 있을 수 있습니다. 이에 따라 본 응용프로그램(또는 본 웹)의 기능에 전적으로 의존함으로써 발생하는 직접적 또는 간접적 손실에 대해 서비스 제공자는 책임을 지지 않습니다.</p>
+            <p>서비스 제공자는 향후 응용프로그램(또는 본 웹)을 업데이트할 수 있습니다. 운영체제 요구사항 또는 지원 플랫폼이 변경될 수 있으며, 계속 사용하기 위해서는 업데이트가 필요할 수 있습니다. 서비스 제공자는 응용프로그램(또는 본 웹)이 항상 사용자에게 적합하거나, 사용자 기기에 설치된 운영체제 버전과 호환됨을 보장하지 않습니다. 다만 제공되는 업데이트는 항상 수락하는 것에 동의합니다. 또한 서비스 제공자는 별도의 통지 없이 응용프로그램(또는 본 웹)의 제공을 중단하고 사용을 종료할 수 있습니다. 종료 시점부터 (a) 본 약관에 따라 부여된 권리와 라이선스는 종료되며, (b) 사용자는 응용프로그램(또는 본 웹)의 사용을 중지하고 필요한 경우 기기에서 삭제해야 합니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>약관 변경</h5>
+            <p>서비스 제공자는 수시로 본 이용약관을 업데이트할 수 있습니다. 변경 사항은 본 페이지에 게시함으로써 알려드립니다. 변경 사항이 있는지 정기적으로 본 페이지를 확인하시기 바랍니다.</p>
+            <p>본 이용약관의 시행일은 2025-10-29 입니다.</p>
+            <p>본 웹페이지를 읽고 이 페이지에 머무르는 경우, 이에 동의한 것으로 간주할 수 있습니다.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>문의하기</h5>
+            <p>본 이용약관에 대한 질문이나 제안이 있으시면 <a href="mailto:jisrubyy@gmail.com">jisrubyy@gmail.com</a> 으로 연락해 주시기 바랍니다.</p>
+          </div>
+
+          {/* English Policy */}
+          <div className="policy-container" data-lang="en" style={{ display: language === 'en' ? 'block' : 'none', background: 'linear-gradient(135deg, var(--medium-gray) 0%, rgba(52, 73, 94, 0.6) 100%)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(26, 188, 156, 0.3)', lineHeight: 1.8, color: 'var(--white)' }}>
+            <h4 style={{ color: 'var(--light-green)', marginTop: 0 }}>Privacy Policy</h4>
+            <p>This privacy policy applies to the all JISRUBYY app and web (hereby referred to as &quot;Application(or this web)&quot;) for all devices(mobile and all platform, pc , etc) that was created by JISRUBYY (hereby referred to as &quot;Service Provider&quot;) all services. This service is intended for use &quot;AS IS&quot;.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Information Collection and Use</h5>
+            <p>The Application(or this web) collects information when you download and use it. This information may include information such as</p>
+            <ul style={{ paddingLeft: '1.2rem' }}>
+              <li>Your device&apos;s Internet Protocol address (e.g. IP address)</li>
+              <li>The pages of the Application(or this web) that you visit, the time and date of your visit, the time spent on those pages</li>
+              <li>The time spent on the Application(or this web)</li>
+              <li>The operating system you use on your mobile device</li>
+            </ul>
+            <p>The Application(or this web) does not gather precise information about the location of your mobile device.</p>
+            <p>The Service Provider may use the information you provided to contact you from time to time to provide you with important information, required notices and marketing promotions.</p>
+            <p>For a better experience, while using the Application(or this web), the Service Provider may require you to provide us with certain personally identifiable information, including but not limited to jisrubyy@gmail.com. The information that the Service Provider request will be retained by them and used as described in this privacy policy.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Third Party Access</h5>
+            <p>Only aggregated, anonymized data is periodically transmitted to external services to aid the Service Provider in improving the Application(or this web) and their service. The Service Provider may share your information with third parties in the ways that are described in this privacy statement.</p>
+            <p>The Service Provider may disclose User Provided and Automatically Collected Information:</p>
+            <ul style={{ paddingLeft: '1.2rem' }}>
+              <li>as required by law, such as to comply with a subpoena, or similar legal process;</li>
+              <li>when they believe in good faith that disclosure is necessary to protect their rights, protect your safety or the safety of others, investigate fraud, or respond to a government request;</li>
+              <li>with their trusted services providers who work on their behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this privacy statement.</li>
+            </ul>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Opt-Out Rights</h5>
+            <p>You can stop all collection of information by the Application(or this web) easily by uninstalling it. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile Application(or this web) marketplace or network.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Data Retention Policy</h5>
+            <p>The Service Provider will retain User Provided data for as long as you use the Application(or this web) and for a reasonable time thereafter. If you&apos;d like them to delete User Provided Data that you have provided via the Application(or this web), please contact them at jisrubyy@gmail.com and they will respond in a reasonable time.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Children</h5>
+            <p>The Service Provider does not use the Application(or this web) to knowingly solicit data from or market to children under the age of 13.</p>
+            <p>The Service Provider does not knowingly collect personally identifiable information from children. The Service Provider encourages all children to never submit any personally identifiable information through the Application(or this web) and/or Services. The Service Provider encourage parents and legal guardians to monitor their children&apos;s Internet usage and to help enforce this Policy by instructing their children never to provide personally identifiable information through the Application(or this web) and/or Services without their permission. If you have reason to believe that a child has provided personally identifiable information to the Service Provider through the Application(or this web) and/or Services, please contact the Service Provider (jisrubyy@gmail.com) so that they will be able to take the necessary actions. You must also be at least 16 years of age to consent to the processing of your personally identifiable information in your country (in some countries we may allow your parent or guardian to do so on your behalf).</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Security</h5>
+            <p>The Service Provider is concerned about safeguarding the confidentiality of your information. The Service Provider provides physical, electronic, and procedural safeguards to protect information the Service Provider processes and maintains.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Changes</h5>
+            <p>This Privacy Policy may be updated from time to time for any reason. The Service Provider will notify you of any changes to the Privacy Policy by updating this page with the new Privacy Policy. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.</p>
+            <p>This privacy policy is effective as of 2025-10-29</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Your Consent</h5>
+            <p>By using the Application(or this web), you are consenting to the processing of your information as set forth in this Privacy Policy now and as amended by us.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Contact Us</h5>
+            <p>If you have any questions regarding privacy while using the Application(or this web), or have questions about the practices, please contact the Service Provider via email at <a href="mailto:jisrubyy@gmail.com">jisrubyy@gmail.com</a>.</p>
+
+            <hr style={{ borderColor: 'rgba(26, 188, 156, 0.3)', margin: '2rem 0' }} />
+
+            <h4 style={{ color: 'var(--light-green)' }}>Terms & Conditions</h4>
+            <p>These terms and conditions apply to the JISRUBYY all app and web (hereby referred to as &quot;Application(or this web)&quot;) for all devices(mobile and all platform, pc, etc) that was created by JISRUBYY (hereby referred to as &quot;Service Provider&quot;) as an all service.</p>
+            <p>Upon downloading or utilizing the Application(or this web), you are automatically agreeing to the following terms. It is strongly advised that you thoroughly read and understand these terms prior to using the Application(or this web). Unauthorized copying, modification of the Application(or this web), any part of the Application(or this web), or our trademarks is strictly prohibited. Any attempts to extract the source code of the Application(or this web), translate the Application(or this web) into other languages, or create derivative versions are not permitted. All trademarks, copyrights, database rights, and other intellectual property rights related to the Application(or this web) remain the property of the Service Provider.</p>
+            <p>The Service Provider is dedicated to ensuring that the Application(or this web) is as beneficial and efficient as possible. As such, they reserve the right to modify the Application(or this web) or charge for their services at any time and for any reason. The Service Provider assures you that any charges for the Application(or this web) or its services will be clearly communicated to you.</p>
+            <p>The Application(or this web) stores and processes personal data that you have provided to the Service Provider in order to provide the Service. It is your responsibility to maintain the security of your phone and access to the Application(or this web). The Service Provider strongly advise against jailbreaking or rooting your phone, which involves removing software restrictions and limitations imposed by the official operating system of your device. Such actions could expose your phone to malware, viruses, malicious programs, compromise your phone&apos;s security features, and may result in the Application(or this web) not functioning correctly or at all.</p>
+            <p>Please be aware that the Service Provider does not assume responsibility for certain aspects. Some functions of the Application(or this web) require an active internet connection, which can be Wi-Fi or provided by your mobile network provider. The Service Provider cannot be held responsible if the Application(or this web) does not function at full capacity due to lack of access to Wi-Fi or if you have exhausted your data allowance.</p>
+            <p>If you are using the Application(or this web) outside of a Wi-Fi area, please be aware that your mobile network provider&apos;s agreement terms still apply. Consequently, you may incur charges from your mobile provider for data usage during the connection to the Application(or this web), or other third-party charges. By using the Application(or this web), you accept responsibility for any such charges, including roaming data charges if you use the Application(or this web) outside of your home territory (i.e., region or country) without disabling data roaming. If you are not the bill payer for the device on which you are using the Application(or this web), they assume that you have obtained permission from the bill payer.</p>
+            <p>Similarly, the Service Provider cannot always assume responsibility for your usage of the Application(or this web). For instance, it is your responsibility to ensure that your device remains charged. If your device runs out of battery and you are unable to access the Service, the Service Provider cannot be held responsible.</p>
+            <p>In terms of the Service Provider&apos;s responsibility for your use of the Application(or this web), it is important to note that while they strive to ensure that it is updated and accurate at all times, they do rely on third parties to provide information to them so that they can make it available to you. The Service Provider accepts no liability for any loss, direct or indirect, that you experience as a result of relying entirely on this functionality of the Application(or this web).</p>
+            <p>The Service Provider may wish to update the Application(or this web) at some point. The Application(or this web) is currently available as per the requirements for the operating system (and for any additional systems they decide to extend the availability of the Application(or this web) to) may change, and you will need to download the updates if you want to continue using the Application(or this web). The Service Provider does not guarantee that it will always update the Application(or this web) so that it is relevant to you and/or compatible with the particular operating system version installed on your device. However, you agree to always accept updates to the Application(or this web) when offered to you. The Service Provider may also wish to cease providing the Application(or this web) and may terminate its use at any time without providing termination notice to you. Unless they inform you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must cease using the Application(or this web), and (if necessary) delete it from your device.</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Changes to This Terms and Conditions</h5>
+            <p>The Service Provider may update their Terms and Conditions from time to time. Thus, you are advised to review this page periodically for any changes. The Service Provider will notify you of any changes by posting the new Terms and Conditions on this page.</p>
+            <p>These terms and conditions are effective as of 2025-10-29</p>
+
+            <h5 style={{ color: 'var(--light-green)' }}>Contact Us</h5>
+            <p>If you have any questions or suggestions about the Terms and Conditions, do not hesitate to contact the Service Provider at <a href="mailto:jisrubyy@gmail.com">jisrubyy@gmail.com</a>.</p>
           </div>
         </section>
       </main>
