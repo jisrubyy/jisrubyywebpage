@@ -150,9 +150,9 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
       detailDescKo: string;
       detailDescEn: string;
       version: string;
-      screenshots: any[];
-      features: any[];
-      changelog: any[]
+      screenshots: never[];
+      features: never[];
+      changelog: never[]
   } = projectDetails[project.id] || {
     ...project,
     detailDescKo: project.descKo,
