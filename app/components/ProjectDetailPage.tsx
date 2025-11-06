@@ -48,8 +48,8 @@ const projectDetails: { [key: string]: ProjectDetail } = {
     descEn: 'Simple memo program for Windows.',
     detailDescKo: 'JISMemo는 Windows 환경에서 사용할 수 있는 간편하고 직관적인 메모 프로그램입니다. 빠른 메모 작성과 효율적인 관리 기능을 제공하여 일상적인 업무나 개인적인 기록을 손쉽게 관리할 수 있습니다.',
     detailDescEn: 'JISMemo is a simple and intuitive memo program for Windows environment. It provides quick memo writing and efficient management features to easily manage daily work or personal records.',
-    version: 'v1.2.0',
-    downloadUrl: 'https://drive.google.com/file/d/1Eck7dZQaGkAf86rEA6UiZpp5YU_N0F_6/view?usp=sharing',
+    version: 'v1.3.0',
+    downloadUrl: 'https://drive.google.com/file/d/1gidL0Orm3KHQZmCRHMGQgqVmQ_5glRD-/view?usp=sharing',
     screenshots: [],
     features: [
       { ko: '간편한 메모 작성 및 편집', en: 'Easy memo writing and editing' },
@@ -59,6 +59,18 @@ const projectDetails: { [key: string]: ProjectDetail } = {
       { ko: '가벼운 시스템 리소스 사용', en: 'Lightweight system resource usage' }
     ],
     changelog: [
+      {
+        version: 'v1.3.0',
+        date: '2025-11-06',
+        changes: [
+          { ko: '텍스트/이미지 붙여넣기 기능 개선', en: 'Improved text/image paste functionality' },
+          { ko: '여러 이미지 지원 및 개별 삭제', en: 'Multiple image support and individual deletion' },
+          { ko: 'UI 크기 및 폰트 개선', en: 'UI size and font improvements' },
+          { ko: '스크롤바 추가', en: 'Added scrollbar' },
+          { ko: '기본 언어 영문 설정', en: 'Default language set to English' },
+          { ko: '각종 버그 수정', en: 'Various bug fixes' }
+        ]
+      },
       {
         version: 'v1.2.0',
         date: '2025-10-29',
@@ -126,7 +138,22 @@ const projectDetails: { [key: string]: ProjectDetail } = {
 
 export default function ProjectDetailPage({ project, language, setLanguage, onBack, onLogoClick }: ProjectDetailPageProps) {
   const t = (ko: string, en: string) => language === 'ko' ? ko : en;
-  const projectDetail: ProjectDetail = projectDetails[project.id] || {
+  const projectDetail: ProjectDetail | {
+      id: string;
+      icon: string;
+      titleKo: string;
+      titleEn: string;
+      descKo: string;
+      descEn: string;
+      downloadUrl: string;
+      disabled: boolean;
+      detailDescKo: string;
+      detailDescEn: string;
+      version: string;
+      screenshots: any[];
+      features: any[];
+      changelog: any[]
+  } = projectDetails[project.id] || {
     ...project,
     detailDescKo: project.descKo,
     detailDescEn: project.descEn,
