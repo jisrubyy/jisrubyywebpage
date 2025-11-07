@@ -48,8 +48,8 @@ const projectDetails: { [key: string]: ProjectDetail } = {
     descEn: 'Simple memo program for Windows.',
     detailDescKo: 'JISMemo는 Windows 환경에서 사용할 수 있는 간편하고 직관적인 메모 프로그램입니다. 빠른 메모 작성과 효율적인 관리 기능을 제공하여 일상적인 업무나 개인적인 기록을 손쉽게 관리할 수 있습니다.',
     detailDescEn: 'JISMemo is a simple and intuitive memo program for Windows environment. It provides quick memo writing and efficient management features to easily manage daily work or personal records.',
-    version: 'v1.3.0',
-    downloadUrl: 'https://drive.google.com/file/d/1gidL0Orm3KHQZmCRHMGQgqVmQ_5glRD-/view?usp=sharing',
+    version: 'v1.4.0',
+    downloadUrl: 'https://drive.google.com/file/d/1pEGuN6TA3tDlRnqLYVA5NxSVeNTY6XYU/view?usp=sharing',
     screenshots: [],
     features: [
       { ko: '간편한 메모 작성 및 편집', en: 'Easy memo writing and editing' },
@@ -59,6 +59,18 @@ const projectDetails: { [key: string]: ProjectDetail } = {
       { ko: '가벼운 시스템 리소스 사용', en: 'Lightweight system resource usage' }
     ],
     changelog: [
+      {
+        version: 'v1.4.0',
+        date: '2025-11-07',
+        changes: [
+          { ko: '메모지 상태바 추가 (최종 수정 일시 표시)', en: 'Added memo status bar (last modified time display)' },
+          { ko: '메모 검색 기능 추가 (🔍 메모 찾기)', en: 'Added memo search feature (🔍 Find Memo)' },
+          { ko: '검색 결과에서 메모 더블클릭 시 해당 메모로 이동', en: 'Double-click search result to navigate to memo' },
+          { ko: '메모 자동 정렬 기능 추가 (📐 메모 정렬)', en: 'Added auto-arrange memos feature (📐 Arrange Memos)' },
+          { ko: 'UI 스케일 조절 기능 추가 (80% ~ 150%)', en: 'Added UI scale adjustment (80% ~ 150%)' },
+          { ko: '접근성 개선 (시력이 안 좋은 사용자를 위한 확대/축소)', en: 'Improved accessibility (zoom in/out for users with poor vision)' }
+        ]
+      },
       {
         version: 'v1.3.0',
         date: '2025-11-06',
