@@ -49,7 +49,7 @@ const projectDetails: { [key: string]: ProjectDetail } = {
     detailDescKo: 'JISMemo는 Windows 환경에서 사용할 수 있는 간편하고 직관적인 메모 프로그램입니다. 빠른 메모 작성과 효율적인 관리 기능을 제공하여 일상적인 업무나 개인적인 기록을 손쉽게 관리할 수 있습니다.',
     detailDescEn: 'JISMemo is a simple and intuitive memo program for Windows environment. It provides quick memo writing and efficient management features to easily manage daily work or personal records.',
     version: 'v1.4.0',
-    downloadUrl: 'https://drive.google.com/file/d/1pEGuN6TA3tDlRnqLYVA5NxSVeNTY6XYU/view?usp=sharing',
+    downloadUrl: 'https://drive.google.com/file/d/13wKB_Qte2XE6rx8nPljpxAtpV9s7slbj/view?usp=sharing',
     screenshots: [],
     features: [
       { ko: '간편한 메모 작성 및 편집', en: 'Easy memo writing and editing' },
