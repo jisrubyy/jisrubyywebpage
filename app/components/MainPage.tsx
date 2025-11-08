@@ -31,7 +31,7 @@ const projects = [
     titleEn: 'JISMemo', 
     descKo: 'Windows용 간편한 메모지 프로그램입니다.', 
     descEn: 'Simple memo program for Windows.', 
-    downloadUrl: 'https://drive.google.com/file/d/152yXrZ38Hh3b-IeLFnehUPExs-evbjTc/view?usp=sharing', 
+    downloadUrl: 'https://drive.google.com/file/d/1bxLqCEjBssaMy_YJJb7hhfwtcULgsTev/view?usp=sharing', 
     disabled: false 
   },
   { 
@@ -108,6 +108,10 @@ export default function MainPage({ language, setLanguage, onLogoClick }: MainPag
 
         <section id="dev-log" className="dev-log">
           <h3>{t('개발 일지', 'Development Log')}</h3>
+          <div className="log-entry">
+            <div className="log-date">2025.11.08</div>
+            <div className="log-content">{t('JISMemo v1.5.0 업데이트 - ToDo 상태 관리(ToDo/Doing/Done/Memo), 정리정렬 기능, 크기/폰트 초기화, UI 개선', 'JISMemo v1.5.0 Update - ToDo status management, organize & arrange, size/font reset, UI improvements')}</div>
+          </div>
           <div className="log-entry">
             <div className="log-date">2025.11.07</div>
             <div className="log-content">{t('JISMemo v1.4.0 업데이트 - 메모지 상태바, 검색 기능, 자동 정렬, UI 스케일 조절 기능 추가', 'JISMemo v1.4.0 Update - Added status bar, search, auto-arrange, and UI scale features')}</div>

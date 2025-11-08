@@ -48,8 +48,8 @@ const projectDetails: { [key: string]: ProjectDetail } = {
     descEn: 'Simple memo program for Windows.',
     detailDescKo: 'JISMemo는 Windows 환경에서 사용할 수 있는 간편하고 직관적인 메모 프로그램입니다. 빠른 메모 작성과 효율적인 관리 기능을 제공하여 일상적인 업무나 개인적인 기록을 손쉽게 관리할 수 있습니다.',
     detailDescEn: 'JISMemo is a simple and intuitive memo program for Windows environment. It provides quick memo writing and efficient management features to easily manage daily work or personal records.',
-    version: 'v1.4.0',
-    downloadUrl: 'https://drive.google.com/file/d/152yXrZ38Hh3b-IeLFnehUPExs-evbjTc/view?usp=sharing',
+    version: 'v1.5.0',
+    downloadUrl: 'https://drive.google.com/file/d/1bxLqCEjBssaMy_YJJb7hhfwtcULgsTev/view?usp=sharing',
     screenshots: [],
     features: [
       { ko: '간편한 메모 작성 및 편집', en: 'Easy memo writing and editing' },
@@ -59,6 +59,17 @@ const projectDetails: { [key: string]: ProjectDetail } = {
       { ko: '가벼운 시스템 리소스 사용', en: 'Lightweight system resource usage' }
     ],
     changelog: [
+      {
+        version: 'v1.5.0',
+        date: '2025-11-08',
+        changes: [
+          { ko: 'ToDo 상태 관리 기능 추가 (ToDo/Doing/Done/Memo)', en: 'Added ToDo status management (ToDo/Doing/Done/Memo)' },
+          { ko: '정리정렬 기능 추가 (크기/폰트 초기화 + 정렬 올인원)', en: 'Added organize & arrange feature (all-in-one reset & sort)' },
+          { ko: '메모 크기/폰트 초기화 기능 추가', en: 'Added memo size/font reset features' },
+          { ko: 'ToDo 우선순위 정렬 기능', en: 'ToDo priority sorting' },
+          { ko: 'UI/UX 개선 (메뉴 2줄 구조, 버튼 크기 조정)', en: 'UI/UX improvements (2-row menu, button size adjustments)' }
+        ]
+      },
       {
         version: 'v1.4.0',
         date: '2025-11-07',
