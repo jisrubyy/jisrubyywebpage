@@ -26,6 +26,7 @@ export default function Header({ language, setLanguage, onLogoClick, onNavigate 
           <li><button onClick={() => onNavigate ? onNavigate('about') : document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="nav-link">{t('제작자 정보', 'About')}</button></li>
           <li><button onClick={() => onNavigate ? onNavigate('contact') : document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="nav-link">{t('연락처', 'Contact')}</button></li>
           <li><button onClick={() => onNavigate ? onNavigate('policy') : document.getElementById('policy')?.scrollIntoView({ behavior: 'smooth' })} className="nav-link">{t('정책', 'Policy')}</button></li>
+          <li><a href="https://buymeacoffee.com/jisrubyy" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}><Image src="/Resources/yellow-button.png" alt="Donation" width={120} height={40} style={{ width: '120px', height: 'auto' }} /><span className="nav-link" style={{ color: 'var(--light-green)' }}>{t('기부', 'Donation')}</span></a></li>
         </ul>
       </nav>
       <button className="language-switch" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
