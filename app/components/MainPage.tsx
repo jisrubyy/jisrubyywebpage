@@ -31,7 +31,7 @@ const projects = [
     titleEn: 'JISMemo', 
     descKo: 'Windows용 간편한 메모지 프로그램입니다.', 
     descEn: 'Simple memo program for Windows.', 
-    downloadUrl: 'https://drive.google.com/file/d/1bxLqCEjBssaMy_YJJb7hhfwtcULgsTev/view?usp=sharing', 
+    downloadUrl: 'https://drive.google.com/file/d/1baxtsIo7EW6xnpx3K8DVaxJBp_IsSmpr/view?usp=sharing', 
     disabled: false 
   },
   { 
