@@ -24,35 +24,35 @@ interface MainPageProps {
 }
 
 const projects = [
-  { 
-    id: 'project1', 
-    icon: '🖥️', 
-    titleKo: 'JISMemo', 
-    titleEn: 'JISMemo', 
-    descKo: 'Windows용 간편한 메모지 프로그램입니다.', 
-    descEn: 'Simple memo program for Windows.', 
-    downloadUrl: 'https://drive.google.com/file/d/1NQxeOK3KWXH0re-A2FfHf9Y8T9wOGgRE/view?usp=sharing', 
-    disabled: false 
+  {
+    id: 'project1',
+    icon: '🖥️',
+    titleKo: 'JISMemo',
+    titleEn: 'JISMemo',
+    descKo: 'Windows용 간편한 메모지 프로그램입니다.',
+    descEn: 'Simple memo program for Windows.',
+    downloadUrl: 'https://drive.google.com/file/d/1o3roMpMjGDAxxIbIQjhEGG59nrwKD96I/view?usp=sharing',
+    disabled: false
   },
-  { 
-    id: 'project2', 
-    icon: '🌐', 
-    titleKo: '웹 기반 도구', 
-    titleEn: 'Web-based Tool', 
-    descKo: '브라우저에서 사용할 수 있는 웹 기반 도구입니다.', 
-    descEn: 'Web-based tool available in browsers.', 
-    downloadUrl: '#', 
-    disabled: true 
+  {
+    id: 'project2',
+    icon: '🌐',
+    titleKo: '웹 기반 도구',
+    titleEn: 'Web-based Tool',
+    descKo: '브라우저에서 사용할 수 있는 웹 기반 도구입니다.',
+    descEn: 'Web-based tool available in browsers.',
+    downloadUrl: '#',
+    disabled: true
   },
-  { 
-    id: 'project3', 
-    icon: '📱', 
-    titleKo: '모바일 앱', 
-    titleEn: 'Mobile App', 
-    descKo: 'Android 및 iOS용 모바일 애플리케이션입니다.', 
-    descEn: 'Mobile application for Android and iOS.', 
-    downloadUrl: '#', 
-    disabled: true 
+  {
+    id: 'project3',
+    icon: '📱',
+    titleKo: '모바일 앱',
+    titleEn: 'Mobile App',
+    descKo: 'Android 및 iOS용 모바일 애플리케이션입니다.',
+    descEn: 'Mobile application for Android and iOS.',
+    downloadUrl: '#',
+    disabled: true
   }
 ];
 
@@ -108,6 +108,10 @@ export default function MainPage({ language, setLanguage, onLogoClick }: MainPag
 
         <section id="dev-log" className="dev-log">
           <h3>{t('개발 일지', 'Development Log')}</h3>
+          <div className="log-entry">
+            <div className="log-date">2026.01.01</div>
+            <div className="log-content">{t('JISMemo v1.6.0 업데이트 - 안정성 강화 및 버그 수정, 프리징 현상 해결, 데이터 보호 로직 개선', 'JISMemo v1.6.0 Update - Stability improvements, bug fixes, resolved freezing issues, enhanced data protection')}</div>
+          </div>
           <div className="log-entry">
             <div className="log-date">2025.11.08</div>
             <div className="log-content">{t('JISMemo v1.5.0 업데이트 - ToDo 상태 관리(ToDo/Doing/Done/Memo), 정리정렬 기능, 크기/폰트 초기화, UI 개선', 'JISMemo v1.5.0 Update - ToDo status management, organize & arrange, size/font reset, UI improvements')}</div>

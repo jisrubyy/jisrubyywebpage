@@ -48,8 +48,8 @@ const projectDetails: { [key: string]: ProjectDetail } = {
     descEn: 'Simple memo program for Windows.',
     detailDescKo: 'JISMemo는 Windows 환경에서 사용할 수 있는 간편하고 직관적인 메모 프로그램입니다. 빠른 메모 작성과 효율적인 관리 기능을 제공하여 일상적인 업무나 개인적인 기록을 손쉽게 관리할 수 있습니다.',
     detailDescEn: 'JISMemo is a simple and intuitive memo program for Windows environment. It provides quick memo writing and efficient management features to easily manage daily work or personal records.',
-    version: 'v1.5.0',
-    downloadUrl: 'https://drive.google.com/file/d/1NQxeOK3KWXH0re-A2FfHf9Y8T9wOGgRE/view?usp=sharing',
+    version: 'v1.6.0',
+    downloadUrl: 'https://drive.google.com/file/d/1o3roMpMjGDAxxIbIQjhEGG59nrwKD96I/view?usp=sharing',
     screenshots: [],
     features: [
       { ko: '간편한 메모 작성 및 편집', en: 'Easy memo writing and editing' },
@@ -59,6 +59,17 @@ const projectDetails: { [key: string]: ProjectDetail } = {
       { ko: '가벼운 시스템 리소스 사용', en: 'Lightweight system resource usage' }
     ],
     changelog: [
+      {
+        version: 'v1.6.0',
+        date: '2026-01-01',
+        changes: [
+          { ko: '프로그램 안정성 대폭 강화', en: 'Significantly enhanced program stability' },
+          { ko: 'UI 프리징(멈춤) 현상 해결', en: 'Resolved UI freezing issues' },
+          { ko: '데이터 손실 방지 로직 개선 (메모 증발 방지)', en: 'Improved data loss prevention (prevents memo disappearance)' },
+          { ko: '내보내기/가져오기 기능 신뢰도 향상', en: 'Improved reliability of export/import features' },
+          { ko: '성능 최적화 및 기타 버그 수정', en: 'Performance optimization and other bug fixes' }
+        ]
+      },
       {
         version: 'v1.5.0',
         date: '2025-11-08',
@@ -162,20 +173,20 @@ const projectDetails: { [key: string]: ProjectDetail } = {
 export default function ProjectDetailPage({ project, language, setLanguage, onBack, onLogoClick }: ProjectDetailPageProps) {
   const t = (ko: string, en: string) => language === 'ko' ? ko : en;
   const projectDetail: ProjectDetail | {
-      id: string;
-      icon: string;
-      titleKo: string;
-      titleEn: string;
-      descKo: string;
-      descEn: string;
-      downloadUrl: string;
-      disabled: boolean;
-      detailDescKo: string;
-      detailDescEn: string;
-      version: string;
-      screenshots: never[];
-      features: never[];
-      changelog: never[]
+    id: string;
+    icon: string;
+    titleKo: string;
+    titleEn: string;
+    descKo: string;
+    descEn: string;
+    downloadUrl: string;
+    disabled: boolean;
+    detailDescKo: string;
+    detailDescEn: string;
+    version: string;
+    screenshots: never[];
+    features: never[];
+    changelog: never[]
   } = projectDetails[project.id] || {
     ...project,
     detailDescKo: project.descKo,
@@ -201,9 +212,9 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
   return (
     <div id="project-detail-page">
       <Header language={language} setLanguage={setLanguage} onLogoClick={onLogoClick} onNavigate={handleNavigate} />
-      
+
       <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-        <button 
+        <button
           onClick={onBack}
           style={{
             background: 'var(--medium-gray)',
@@ -229,12 +240,12 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
           <p style={{ fontSize: '1.2rem', color: 'var(--white)', marginBottom: '2rem' }}>
             {language === 'ko' ? projectDetail.detailDescKo : projectDetail.detailDescEn}
           </p>
-          
+
           <div className="download-section" style={{ marginBottom: '2rem' }}>
             <div style={{ marginBottom: '1rem', color: 'var(--light-green)', fontSize: '1.1rem' }}>
               {t('현재 버전:', 'Current Version:')} {projectDetail.version}
             </div>
-            <a 
+            <a
               href={projectDetail.downloadUrl}
               target="_blank"
               style={{
@@ -263,7 +274,7 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
             <h2 style={{ color: 'var(--light-green)', marginBottom: '1.5rem' }}>
               {t('주요 기능', 'Key Features')}
             </h2>
-            <div style={{ 
+            <div style={{
               background: 'linear-gradient(135deg, var(--medium-gray) 0%, rgba(52, 73, 94, 0.6) 100%)',
               padding: '2rem',
               borderRadius: '12px',
@@ -271,10 +282,10 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
             }}>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {projectDetail.features.map((feature, index) => (
-                  <li key={index} style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '1rem', 
+                  <li key={index} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
                     marginBottom: '1rem',
                     color: 'var(--white)'
                   }}>
@@ -290,7 +301,7 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
             <h2 style={{ color: 'var(--light-green)', marginBottom: '1.5rem' }}>
               {t('개발 일지', 'Development Log')}
             </h2>
-            <div style={{ 
+            <div style={{
               background: 'linear-gradient(135deg, var(--medium-gray) 0%, rgba(52, 73, 94, 0.6) 100%)',
               padding: '2rem',
               borderRadius: '12px',
@@ -298,10 +309,10 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
             }}>
               {projectDetail.changelog.map((log, index) => (
                 <div key={index} style={{ marginBottom: index < projectDetail.changelog.length - 1 ? '2rem' : 0 }}>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '1rem', 
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
                     marginBottom: '1rem',
                     paddingBottom: '0.5rem',
                     borderBottom: '1px solid rgba(26, 188, 156, 0.3)'
@@ -311,10 +322,10 @@ export default function ProjectDetailPage({ project, language, setLanguage, onBa
                   </div>
                   <ul style={{ listStyle: 'none', padding: 0 }}>
                     {log.changes.map((change, changeIndex) => (
-                      <li key={changeIndex} style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '1rem', 
+                      <li key={changeIndex} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
                         marginBottom: '0.5rem',
                         color: 'var(--white)'
                       }}>
