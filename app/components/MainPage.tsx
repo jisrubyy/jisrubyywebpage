@@ -109,7 +109,7 @@ export default function MainPage({ language, setLanguage, onLogoClick }: MainPag
         <section id="dev-log" className="dev-log">
           <h3>{t('개발 일지', 'Development Log')}</h3>
           <div className="log-entry">
-            <div className="log-date">2026.01.01</div>
+            <div className="log-date">2026.1.1</div>
             <div className="log-content">{t('JISMemo v1.6.0 업데이트 - 안정성 강화 및 버그 수정, 프리징 현상 해결, 데이터 보호 로직 개선', 'JISMemo v1.6.0 Update - Stability improvements, bug fixes, resolved freezing issues, enhanced data protection')}</div>
           </div>
           <div className="log-entry">
